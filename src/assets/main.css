@@ -1,0 +1,31 @@
+@import './base.css';
+
+
+
+main{
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* #app{
+  width: 100%;
+  min-height: 100vh;
+  background-color: aquamarine;
+} */
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* @media (min-width: 1024px) {
+  body {
+    display: flex;
+    place-items: center;
+  }
+
+  #app {
+
+  }
+} */
