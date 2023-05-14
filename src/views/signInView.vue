@@ -13,6 +13,7 @@
 
             <Input label="Senha" name="password" type="password" v-model.trim="password" @input="$event => password = $event.target.value" />
 
+                <div class="error-message" v-if="isAPIapiError"> {{ apiErrorMessage }}</div>
 
             <button type="submit"> ENTRAR</button>
 
@@ -28,9 +29,12 @@
     import Input from "@/components/form/input.vue"
     import Silverware  from 'vue-material-design-icons/Silverware.vue';
     import {useAuthStore} from "../stores/AuthStore"
+    import { ref } from "vue";
 
 
     const auth = useAuthStore();
+    const isAPIapiError = ref(false)
+    const apiErrorMessage = ref("")
 
 
     export default{
@@ -43,21 +47,40 @@
             return{
                 email: "",
                 password: "",
+                isAPIapiError,
+                apiErrorMessage
             }
         },
         methods:{
            async handleSubmit(e){
-        
-            await auth.login({
-                email: this.email,
-                password: this.password
-            })
+            
+                try{
+                    await auth.login({
+                    email: this.email,
+                    password: this.password
+                    })
 
-            const user = JSON.parse([localStorage.getItem("restaurant-challenge.user")]);
+                    isAPIapiError.value = false
 
-            if (user.isAdmin === true) {
-                return this.$router.push("/dashboard");
-            }
+
+                }catch(error){
+                    console.log(error)
+
+                    if(error.response.status === 401){
+                        isAPIapiError.value = true
+                        apiErrorMessage.value = "E-mail ou senha inválidos."
+                    }
+                    else{
+                        isAPIapiError.value = true
+                        apiErrorMessage.value = "Ocorreu um erro interno."
+                    }
+                }
+
+                const user = JSON.parse([localStorage.getItem("restaurant-challenge.user")]);
+
+                if (user.isAdmin === true) {
+                    return this.$router.push("/dashboard");
+                }
 
                 this.$router.push("/reservation/new");
             }
@@ -122,6 +145,10 @@
 
     a:hover{
         cursor: pointer;
+    }
+    .error-message {
+        color: red;
+        font-size: 14px;
     }
 
     @media screen and (max-width: 975px) {

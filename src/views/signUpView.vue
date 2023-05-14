@@ -123,6 +123,12 @@
                             password: this.password
                         });
 
+                        const user = JSON.parse([localStorage.getItem("restaurant-challenge.user")]);
+
+                        if (user.isAdmin === true) {
+                            return this.$router.push("/dashboard");
+                        }
+
                         this.$router.push("/reservation/new");
 
                     })
