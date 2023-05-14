@@ -22,8 +22,31 @@ npm install
 npm run dev
 ```
 
-### Compile and Minify for Production
+### Start application
 
 ```sh
-npm run build
+npm run dev
 ```
+
+ # Tecnologias utilizadas
+## Back end
+- Nodejs
+- Typescript
+- Docker
+- Typeorm
+- JWT
+## Front end
+- Vue
+- Javascript
+- Vuelidate
+- HTML / CSS
+- Pinia
+- Context API
+- Vue cookies
+
+# Autor
+
+Mateus Lopes
+
+https://www.linkedin.com/in/progmateus/
+
